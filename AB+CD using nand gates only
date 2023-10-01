@@ -1,0 +1,42 @@
+////design file
+module Nand_addr(
+  input A,
+  input B ,
+  input C ,
+  input D, 
+  output sum );
+  wire n1,n2,n3;
+  assign n1=~(A&B);
+  assign n2=~(C&D);
+  assign n3=~(n1&n2);
+    assign sum=~n3;
+endmodule
+
+
+
+////TESTBENCH IS HERE/////
+
+module testbench;
+reg A,B,C,D;
+  wire sum;
+  Nand_addr UUT( .A(A), .B(B), .C(C), .D(D), .sum(sum));
+initial
+       begin 
+             $dumpfile("dump.vcd"); // Specify the VCD file name
+    $dumpvars(0, testbench);
+         
+     A=0;
+         B=1;
+         C=0;
+         D=0;
+         #10;
+         if (sum===1)
+           begin $display("test 1 passed");
+                 end
+         else 
+           begin
+             $display("test 1 failed");
+             $finish; end
+             
+       end
+endmodule
