@@ -1,0 +1,46 @@
+/////operation=(AB+~C)/////
+////DESIGN FILE///////
+
+module ab_~c(
+  input A,
+    input B,
+    input C,
+  output sum);
+  wire n1,n2,a1;
+  assign n1=~(A&B);
+  assign n2=~C;
+  assign a1=(n1+n2);
+  assign sum=a1;
+endmodule
+
+
+///////testbench//////
+
+
+
+module testbench;
+  reg A,B,C;
+  wire sum;
+  ab_~c inst(.A(A),.B(B),.C(C),.sum(sum));
+  integer i;
+  initial
+       begin 
+         $dumpfile("dump.vcd");
+         $dumpvars();
+                 #100;
+ 
+    $finish;
+       end
+           initial 
+                          begin  
+                                  A<= 0;
+                                  B<= 0;
+                                   C<=0;
+                                         $monitor("A=%0b B=%0b C=%0b SUM=%0b ,A,B,C,SUM") ;       
+                                                                                 for(i=0; i<7; i=i+1)
+                                                                                                       begin  {A,B,C}=i;
+                              #10;
+
+                              end
+                                                                                                                    end
+endmodule
