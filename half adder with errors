@@ -1,0 +1,29 @@
+// Code your testbench here
+module testbench;
+  reg A,B ;
+  wire sum,carry;
+  integer i;
+  half_adder UUT(.A(A),.B(B),.sum(sum),.carry(carry));
+  
+  initial  
+        begin 
+          $dumpfile("dump.vcd");
+          $dumpvars;
+          #100;
+          $finish;
+        end
+  initial
+       begin
+           A<=0;
+           B<=0;
+           sum<=0;
+           carry<=0;
+           $monitor("A=%b B=%b sum=%b carry=%b");  
+       end 
+  initial
+       begin   
+    for(i=0; i<=3; i=i+1)
+    {A,B,sum,carry}=i 
+    
+      end 
+endmodule
