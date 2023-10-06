@@ -1,49 +1,47 @@
-// Code your testbench here
+//Testbench for the Half Adder
 module testbench;
   reg A, B;
-  wire S, C; // Use wire for S and C
+  wire S, C;
+
+  // Instantiate the half_adder module
   half_adder inst (
     .A(A),
     .B(B),
     .S(S),
     .C(C)
   );
-  integer i;
 
   initial begin
     $dumpfile("dump.vcd");
     $dumpvars;
-    #100;
-    $finish;
-  end
-
-  initial begin
+    
+    // Initialize signals
     A = 0;
     B = 0;
-    $monitor("A=%b B=%b S=%b C=%b",A,B,S,C);
-
-    for (i = 0; i <= 3; i = i + 1) begin
-      {A, B} = i; // Assign bits of i to A and B
-      #10;
-    end
+    
+    // Monitor and display the signals
+    $monitor("A=%b, B=%b, S=%b, C=%b", A, B, S, C);
+    
+    // Test with different inputs
+    A = 0; B = 0; #10;
+    A = 0; B = 1; #10;
+    A = 1; B = 0; #10;
+    A = 1; B = 1; #10;
+    
+    $finish;
   end
 endmodule
 
 
 
 
-
-// Code your design here
-
-// design code for the half adder
-module half_adder(
+// Half Adder Design
+module half_adder (
   input A,
-input B,
- output S,
-  output C );
-   wire xor1,and1 ;
-  assign xor1 =(A^B);
-  assign and1=(A&&B);
-  assign s=xor1;
-  assign c=and1;
+  input B,
+  output S,
+  output C
+);
+  assign S = A ^ B;
+  assign C = A & B;
 endmodule
