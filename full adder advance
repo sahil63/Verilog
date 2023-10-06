@@ -1,0 +1,68 @@
+// Code your testbench here
+// or browse Examples
+module testbench_full_adder;
+
+  // Inputs
+  reg A;
+  reg B;
+  reg Cin;
+
+  // Outputs
+  wire Sum;
+  wire Cout;
+integer i;
+  // Instantiate the full adder module
+  full_adder uut (
+    .A(A),
+    .B(B),
+    .Cin(Cin),
+    .Sum(Sum),
+    .Cout(Cout)
+  );
+
+  // Clock generation
+  reg clk = 0;
+  always begin
+    #5 clk = ~clk;
+  end
+initial begin 
+ 
+   A= 0;
+   B= 0;
+   Cin=0;
+   $display("A=%b, B=%b, Cin=%b, Sum=%b, Cout=%b", A, B, Cin, Sum, Cout);
+
+   
+    for (i = 0; i <= 1; i = i + 1) begin
+      {A,B,Cin}=i;
+          #10;
+        end
+    
+    $finish;
+  end
+
+endmodule     
+
+
+
+
+
+
+
+
+
+
+
+// Code your design here
+module full_adder (
+    input A, // First input
+    input B, // Second input
+    input Cin, // Carry input
+    output Sum, // Sum output
+    output Cout // Carry output
+);
+
+assign Sum = A ^ B ^ Cin; // Sum output
+assign Cout = (A & B) | (B & Cin) | (A & Cin); // Carry output
+
+endmodule
