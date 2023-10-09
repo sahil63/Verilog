@@ -1,0 +1,40 @@
+// Code your testbench here
+module testbench ;
+  reg A,B,S;
+  wire Y;
+  integer i;
+  mux_2x1 inst(
+    .A(A),
+    .B(B),
+    .S(S),
+    .Y(Y)               );
+  initial  begin 
+    $dumpfile("dump.vcd");
+    $dumpvars();
+    #10;     end
+   // Initialize inputs
+  initial begin
+    A = 0;
+    B = 1;
+    S = 0;
+    
+    // Test case 1
+    #10 S = 1;
+    #10 S = 0;
+    
+    // Test case 2
+    S = 1;
+    S = 0;
+    S = 1;
+    #10 S = 0;
+    
+    // Terminate simulation
+    $finish;
+  end
+
+  // Display simulation results
+  always @(posedge S or posedge A or posedge B) begin
+    $display("Time=%t A=%b B=%b S=%b Y=%b", $time, A, B, S,Y);
+  end
+
+endmodule
