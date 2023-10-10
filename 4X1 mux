@@ -1,0 +1,75 @@
+///////////design fle
+
+
+module mux_2x1(
+  input A,
+   input B,
+   input C,
+   input D,
+   input S1,
+   input S2,
+  output Y);
+
+assign Y = (S2) ? (S1 ? D : C) : (S1 ? B : A);
+endmodule                                                 
+
+
+
+
+
+
+
+
+
+
+// Code your testbench here
+module testbench ;
+  reg A,B,C,D,S1,S2;
+  wire Y;
+  integer i;
+  mux_2x1 inst(
+    .A(A),
+    .B(B),
+    .C(C),
+    .D(D),
+    .S1(S1),
+    .S2(S2),
+    .Y(Y));
+  initial  begin 
+    $dumpfile("dump.vcd");
+    $dumpvars();
+    #10;     end
+   // Initialize inputs
+  initial begin
+    A = 0;
+    B = 1;
+    C = 0;
+    D = 1;
+    S1 = 0;
+    S2=1;
+    // Test case 1
+    #5 S1 = 1;
+    #5 S2= 0;
+    
+    // Test case 2
+    #20
+      A = 1;
+    B = 0;
+    C = 1;
+    D = 0;
+   
+    S1 = 1;
+    S2 = 1;
+    #10 S1 = 0;
+    #5 S2=0;
+   begin  
+     $monitor("A=%b, B=%b, C=%b,  D=%b S1=%b S2=%b Y=%b ", A, B, C,D,S1,S2 ,Y);
+    // Terminate simulation
+    $finish;
+  end
+  end
+
+  
+endmodule
+
+
