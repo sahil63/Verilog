@@ -1,7 +1,7 @@
 ///////////design fle
 
 
-module mux_2x1(
+module mux_4x1(
   input A,
    input B,
    input C,
