@@ -1,34 +1,33 @@
 /////////////////////DESIGN/////////////
-
-module ALU(X,Y,Z, Sign,Zero,Carry,Parity,Overflow);
+module alutest(X,Y,Z, Sign,Zero,Carry,Parity,Overflow);
   
   input [15:0]X,Y;
   output[15:0]Z;
   output Sign,Zero,Carry,Parity,Overflow;
 
-  assign [Carry,Z]=X+Y;
+  assign {Carry,Z}=X+Y;
   assign Sign =Z[15];
     assign Z=~|Z;
   assign Parity=~^Z;
   assign Overflow=(X[15]&Y[15]&~Z[15])|(~X[15]&~Y[15]&Z[15]);
 endmodule
-
+  
+      
 
 TESTBENCH/////////////////////
 
-module alutest;
+module ALU;
   reg[15:0]X,Y;
-  wire[15:0]Z; wire S,ZR,CY,P,V;
-  ALU DUT [X,Y,Z,S,ZR,CY,P,V]
+  wire[15:0]Z; wire Sign,Zero,Carry,Parity,Overflow;
+  alutest DUT( .X(X),.Y(Y),.Z(Z),.Sign(Sign),.Zero(Zero),.Carry(Carry),.Parity(Parity),.Overflow(Overflow));
   initial
     begin
-      $dumpfile("alu.vcd")
-      $dumpvars(0,alutest);
-      $monitor($time,"X=%h,Y=%h,Z=%h,S=%b,Z=%b,CY=%b,P=%b,V=%b",X,Y,Z,S,ZR,CY,P,V);
-    #5 x=16'h8fff; Y=16'h8000;
-       #5 x=16'hfffe; Y=16'h0002;
-       #5 x=16'hAAAA; Y=16'h5555;
+      $dumpfile("alu.vcd");
+      $dumpvars;
+      $monitor($time,"X=%h,Y=%h,Z=%h,Sign=%b,Zero=%b,Carry=%b,Parity=%b,Overflow=%b",X,Y,Z,Sign,Zero,Carry,Parity,Overflow);
+    #5 X=16'h8fff; Y=16'h8000;
+       #5 X=16'hfffe; Y=16'h0002;
+       #5 X=16'hAAAA; Y=16'h5555;
       #5 $finish;
     end
       endmodule
-      
