@@ -1,0 +1,64 @@
+`timescale 1ns/1ps
+////////////////////////////////////////////////////////////////////////
+module tb_counter_6bit;
+
+  reg clk;
+  reg rst;
+  wire [5:0] count;
+
+  // Instantiate the counter module
+  counter_6bit uut (
+    .clk(clk),
+    .rst(rst),
+    .count(count)
+  );
+  initial begin 
+    $dumpfile("s.vcd");
+    $dumpvars();
+  end
+
+  // Clock generation
+  always begin
+    #5 clk = ~clk;
+  end
+
+  // Initial block for simulation setup
+  initial begin
+    clk = 0;
+    rst = 1; // Reset is active-high
+
+    // Apply reset for a few clock cycles
+    #10 rst = 0;
+  end
+
+  // Stimulus block
+  initial begin
+    // Monitor the counter value
+    $monitor("Time=%0t, Count=%b", $time, count);
+
+    // Run simulation for 50 clock cycles
+    #50 $finish;
+  end
+
+endmodule
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+// Code your design here
+module counter_6bit (
+  input wire clk,
+  input wire rst,
+  output reg [5:0] count
+);
+
+always @(posedge clk or posedge rst) begin
+  if (rst) begin
+    count <= 6'b000000;
+  end else begin
+    count <= count + 1;
+  end
+end
+
+endmodule
+
