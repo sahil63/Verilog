@@ -1,0 +1,30 @@
+// Code your testbench here
+
+module ALU_Adder_Testbench;
+
+reg [3:0] A, B;
+  wire [3:0] result;
+
+ALU_Adder uut (
+    .A(A),
+    .B(B),
+    .result(result)
+);
+
+initial begin
+    // Test case 1: Addition
+    A = 4'b1010;
+    B = 4'b0100;
+    #10;
+
+    // Test case 2: Addition
+    A = 4'b1100;
+    B = 4'b0011;
+    
+
+    // Add more test cases as needed
+
+    $stop;
+end
+
+endmodule
